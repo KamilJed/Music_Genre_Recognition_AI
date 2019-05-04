@@ -1,7 +1,7 @@
 from PIL import Image
 
 def crop( inputPath):
-    im = Image.open(inputPath)
+    im = Image.open(inputPath).convert('LA')
     pixels = list(im.getdata())
     imgwidth, imgheight = im.size
     #newwidth = imgwidth/10
