@@ -1,0 +1,2 @@
+spectrogramsDir = "spectrograms\\"
+dataDir = "data\\"
