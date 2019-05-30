@@ -5,6 +5,7 @@ import librosa.display
 import os
 import gc
 
+
 def createSpecrograms():
     print("Generating spectrograms started")
     curpath = os.getcwd()
