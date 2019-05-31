@@ -13,7 +13,7 @@ def createSpecrograms():
     genres = os.listdir(curpath)
 
     for genre in genres:
-        path = curpath + '\\' + genre
+        path = curpath + genre
         print("Current genre: " + genre)
         if os.path.isdir(path):
             files = os.listdir(path)
@@ -50,3 +50,4 @@ def _createSpectrogram(path, genre):
     fig.clf()
     plt.close()
     gc.collect()
+
