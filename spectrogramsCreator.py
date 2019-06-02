@@ -19,7 +19,7 @@ def createSpecrograms():
             files = os.listdir(path)
             for file in files:
                 if os.path.isfile(path + '\\' + file):
-                    _createSpectrogram(path + '\\' + file, genre)
+                    _createSpectrogram(path + '\\' + file, genre, "train")
 
 
 def getAvalaibleSpectrograms():
@@ -36,7 +36,7 @@ def getAvalaibleSpectrograms():
     return avalaibleSpectrograms
 
 
-def _createSpectrogram(path, genre):
+def _createSpectrogram(path, genre, mode):
     print("Generating spectrogram: " + os.path.splitext(os.path.basename(path))[0])
     x, sr = librosa.load(path, mono=True)
     spectr = librosa.stft(x)
@@ -45,7 +45,10 @@ def _createSpectrogram(path, genre):
     ax = plt.axes()
     ax.set_axis_off()
     librosa.display.specshow(spectrDb, sr=sr, cmap='gray')
-    path = config.spectrogramsDir + genre + '\\' + os.path.splitext(os.path.basename(path))[0] + ".png"
+    if mode == "train":
+        path = config.spectrogramsDir + genre + '\\' + os.path.splitext(os.path.basename(path))[0] + ".png"
+    else:
+        path = config.spectrogramsDir + "test" + '\\' + os.path.splitext(os.path.basename(path))[0] + ".png"
     fig.savefig(path, bbox_inches='tight', transparent=True, pad_inches=0.0)
     fig.clf()
     plt.close()
