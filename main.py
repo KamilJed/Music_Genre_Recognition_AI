@@ -7,6 +7,7 @@ from tensorflow.python.keras.optimizers import rmsprop, Adam
 from musicLabelBinarizer import fit_trasform
 from musicFileInfo import getAllGenres
 from tensorflow.python.keras.callbacks import TensorBoard
+from config import dataForTestingPercent, dataForTrainingPercent, dataForValidatingPercent
 import numpy
 
 model = Sequential()
@@ -30,19 +31,18 @@ model.add(Dense(10, activation='softmax'))
 
 model.compile(optimizer=Adam(epsilon=1e-08), loss='categorical_crossentropy', metrics=['accuracy'])
 
-print(model.get_weights())
 spectrogramsAvalaible = sC.getAvalaibleSpectrograms()
 dataSet = createTrainingSet(spectrogramsAvalaible, len(spectrogramsAvalaible))
 dataSetX, dataSetY = zip(*dataSet)
 
-dataSetTrainX = dataSetX[:int(0.7*len(dataSetX))]
-dataSetTrainY = dataSetY[:int(0.7*len(dataSetY))]
+dataSetTrainX = dataSetX[:int(dataForTrainingPercent*len(dataSetX))]
+dataSetTrainY = dataSetY[:int(dataForTrainingPercent*len(dataSetY))]
 
-dataSetValX = dataSetX[int(0.7*len(dataSetX)):int(0.9*len(dataSetX))]
-dataSetValY = dataSetY[int(0.7*len(dataSetY)):int(0.9*len(dataSetY))]
+dataSetValX = dataSetX[int(dataForTrainingPercent*len(dataSetX)):int((dataForTrainingPercent + dataForValidatingPercent)*len(dataSetX))]
+dataSetValY = dataSetY[int(dataForTrainingPercent*len(dataSetY)):int((dataForTrainingPercent + dataForValidatingPercent)*len(dataSetY))]
 
-dataSetTestX = dataSetX[int(0.9*len(dataSetX)):]
-dataSetTestY = dataSetY[int(0.9*len(dataSetY)):]
+dataSetTestX = dataSetX[int((dataForTrainingPercent + dataForValidatingPercent)*len(dataSetX)):]
+dataSetTestY = dataSetY[int((dataForTrainingPercent + dataForValidatingPercent)*len(dataSetY)):]
 
 
 trainX = numpy.asarray(dataSetTrainX)
