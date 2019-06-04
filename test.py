@@ -5,6 +5,8 @@ from crop import crop
 import numpy
 import os
 from musicFileInfo import getAllGenres
+from spectrogramsCreator import _createSpectrogram
+from config import spectrogramsDir
 
 model = Sequential()
 
@@ -27,15 +29,19 @@ model.add(Dense(10, activation='softmax'))
 
 model.compile(optimizer=Adam(epsilon=1e-08), loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.load_weights("best_model_ever")
+model.load_weights("best_model_ever_adam0")
 
-test_Spect= os.listdir("spectrograms\\test\\")
+#files = os.listdir("songs\\")
+#for file in files:
+#    _createSpectrogram("songs\\" + file, mode="test")
+
+test_Spect= os.listdir(spectrogramsDir + "test\\")
 
 genres = getAllGenres()
 
 for spect in test_Spect:
 
-    data = crop("spectrograms\\test\\" + spect)
+    data = crop(spectrogramsDir + "test\\" + spect)
 
     testX = numpy.asarray(data)
     testX = testX.reshape([-1, 128, 128, 1])
@@ -50,5 +56,3 @@ for spect in test_Spect:
         print(os.path.splitext(os.path.basename(spect))[0] + ' is ' + genres[classses.index(max(classses))])
     else:
         print("I'm not sure what genre is " + os.path.splitext(os.path.basename(spect))[0])
-
-

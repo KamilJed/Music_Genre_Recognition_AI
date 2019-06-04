@@ -29,14 +29,14 @@ def getAvalaibleSpectrograms():
 
     for genre in genres:
         genrePath = path + '\\' + genre
-        if os.path.isdir(genrePath):
+        if os.path.isdir(genrePath) and genre != 'test':
             files = map(os.path.basename, os.listdir(genrePath))
             avalaibleSpectrograms += list(files)
 
     return avalaibleSpectrograms
 
 
-def _createSpectrogram(path, genre, mode):
+def _createSpectrogram(path, genre="none", mode="train"):
     print("Generating spectrogram: " + os.path.splitext(os.path.basename(path))[0])
     x, sr = librosa.load(path, mono=True)
     spectr = librosa.stft(x)

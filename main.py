@@ -57,7 +57,7 @@ testX = numpy.asarray(dataSetTestX)
 testX = testX.reshape([-1, 128, 128, 1])
 testY = fit_trasform(dataSetTestY, getAllGenres())
 
-checkpoint = ModelCheckpoint("best_model_ever_adam", monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+checkpoint = ModelCheckpoint("best_model_ever", monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 tensorboard = TensorBoard(log_dir='./logs', histogram_freq=0,
                           write_graph=True, write_images=False)
 callbacks_list = [checkpoint, tensorboard]
@@ -66,6 +66,7 @@ model.fit(trainX, trainY, validation_data=(validX, validY), epochs=20, batch_siz
           callbacks=callbacks_list)
 
 print("model succesfully trained")
-model.save("model_adam")
+model.save("model")
 
 testAccu = model.evaluate(testX, testY)[0]
+print(testAccu)
