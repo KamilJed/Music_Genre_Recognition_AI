@@ -4,7 +4,7 @@ Whole songs genres are recognised a liitle bit more accuratly, because we look a
 Seems to be working quite well.
 
 # How to use
-1. Create folder tree in project root:
+1. Create folder tree in project root:  
 -data //folder in which the training data will be stored  
 -- //inside data create folders with named by genre ie. rock, blues etc.  
 -spectrograms //folder in which the generated spectrograms will be stored  
